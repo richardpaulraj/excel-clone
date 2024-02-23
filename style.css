@@ -9,7 +9,7 @@ body {
 
 .page-actions-cont {
   height: 3rem;
-  background-color: #27ae60;
+  /* background-color: #27ae60; */
   display: flex;
   align-items: flex-end;
   padding-left: 1rem;
