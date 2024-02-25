@@ -9,7 +9,7 @@ body {
 
 .page-actions-cont {
   height: 3rem;
-  /* background-color: #27ae60; */
+  background-color: #27ae60;
   display: flex;
   align-items: flex-end;
   padding-left: 1rem;
@@ -82,6 +82,9 @@ body {
 
 .grid-cont {
   height: calc(100vh - 3rem - 3rem - 2rem - 3rem);
+  position: relative; /*I am giving relative to the parent of my position: absolute because I wanted that values to react acoording to this box and not the global box*/
+  overflow: scroll;
+  background-color: #ecf0f1;
 }
 .sheet-add-icon {
   width: 2rem;
@@ -99,4 +102,47 @@ body {
   font-weight: bold;
   text-decoration-thickness: 1.5px;
   font-size: 0.9rem;
+}
+
+/* For the Grid */
+
+.top-left-dummy-box {
+  width: 2rem;
+  height: 2rem;
+  background-color: grey;
+}
+
+.address-col {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.address-row-cont {
+  display: flex;
+}
+.address-row {
+  border: 1px solid grey;
+  width: 5rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cells-cont {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+}
+
+.row-cont {
+  display: flex; /*because the cell is inside the row-cont and it was comming like flex direction : column*/
+}
+.cell {
+  width: 5rem;
+  height: 2rem;
+  border: 1px solid grey;
 }
