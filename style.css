@@ -1,8 +1,5 @@
 * {
   box-sizing: border-box;
-}
-
-body {
   padding: 0;
   margin: 0;
 }
@@ -64,6 +61,7 @@ body {
 }
 .address-bar {
   width: 5rem;
+  text-align: center;
 }
 .formula-bar {
   width: calc(100vw - 5rem - 0.7rem - 0.7rem - 0.7rem);
@@ -81,10 +79,11 @@ body {
 }
 
 .grid-cont {
-  height: calc(100vh - 3rem - 3rem - 2rem - 3rem);
+  height: calc(100vh - 3rem - 3rem - 2rem - 3rem - 2px);
   position: relative; /*I am giving relative to the parent of my position: absolute because I wanted that values to react acoording to this box and not the global box*/
   overflow: scroll;
   background-color: #ecf0f1;
+  background-color: white;
 }
 .sheet-add-icon {
   width: 2rem;
@@ -109,13 +108,21 @@ body {
 .top-left-dummy-box {
   width: 2rem;
   height: 2rem;
-  background-color: grey;
+  background-color: white;
+  border: 1px solid #ecf0f1;
+  position: fixed;
+  z-index: 5; /*Position is manditory to apply z-index*/
+}
+.address-col-cont {
+  position: sticky;
+  top: 2rem;
+  left: 0;
 }
 
 .address-col {
   width: 2rem;
   height: 2rem;
-  border: 1px solid grey;
+  border: 1px solid #ecf0f1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,9 +130,13 @@ body {
 
 .address-row-cont {
   display: flex;
+  position: sticky;
+  top: 0;
+  left: 0;
+  margin-right: calc(2rem - 1px);
 }
 .address-row {
-  border: 1px solid grey;
+  border: 1px solid #ecf0f1;
   width: 5rem;
   height: 2rem;
   display: flex;
@@ -144,5 +155,7 @@ body {
 .cell {
   width: 5rem;
   height: 2rem;
-  border: 1px solid grey;
+  border: 1px solid #ecf0f1;
+  overflow: auto;
+  outline-color: grey;
 }

@@ -4,6 +4,7 @@ let cols = 26
 let addressColContainer = document.querySelector('.address-col-cont')
 let addressRowContainer = document.querySelector('.address-row-cont')
 let cellsContainer = document.querySelector('.cells-cont')
+let addressBar = document.querySelector('.address-bar')
 
 for (let i = 0; i < rows; i++) {
   let addressCol = document.createElement('div')
@@ -25,8 +26,36 @@ for (let i = 0; i < rows; i++) {
   rowCont.classList.add('row-cont')
   for (let j = 0; j < cols; j++) {
     let cell = document.createElement('div')
+    cell.setAttribute('contenteditable', true)
     cell.classList.add('cell')
     rowCont.appendChild(cell)
+
+    displayCellAddress(cell, i, j)
   }
   cellsContainer.appendChild(rowCont)
 }
+
+function displayCellAddress(cell, i, j) {
+  cell.addEventListener('click', () => {
+    let rowID = i + 1
+    let colID = String.fromCharCode(65 + j)
+    addressBar.value = `${colID}${rowID}`
+  })
+}
+
+//Setting Scroll to go 2rem on each particular scroll
+const scrollElement = document.querySelector('.grid-cont')
+
+scrollElement.addEventListener('wheel', (event) => {
+  event.preventDefault()
+  const scrollDirection = event.deltaY > 0 ? 1 : -1 // 1 for down, -1 for up
+
+  const scrollAmountX = 5 * 16 // 5rem in pixels (assuming 1rem = 16px)
+  const scrollAmountY = 2 * 16 // 2rem in pixels (assuming 1rem = 16px)
+
+  if (event.shiftKey) {
+    scrollElement.scrollLeft += scrollAmountX * scrollDirection
+  } else {
+    scrollElement.scrollTop += scrollAmountY * scrollDirection
+  }
+})
