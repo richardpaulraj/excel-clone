@@ -12,7 +12,7 @@ for (let i = 0; i < rows; i++) {
       fontFamily: 'monospace',
       fontSize: '16',
       fontColor: '#000000',
-      bgColor: '#000000', //Just for indication purpose
+      backgroundColor: '#000000', //Just for indication purpose
     }
     sheetRow.push(cellProp)
   }
@@ -146,10 +146,44 @@ function addListnerToAttachCellProperties(cell) {
     cell.style.fontSize = cellProp.fontSize + 'px' // FontSize
     cell.style.fontFamily = cellProp.fontFamily // FontFamily
     cell.style.color = cellProp.fontColor // FontColor
-    cell.style.backgroundColor = cellProp.backgroundColor // BackgroundColor
+    cell.style.backgroundColor =
+      cellProp.backgroundColor === '#000000'
+        ? 'transparent'
+        : cellProp.backgroundColor // BackgroundColor
     cell.style.textAlign = cellProp.alignment // Alignment
 
-    //UI Change - 2)
+    if (cellProp.alignment === 'left') {
+      leftAlign.classList.add('activeIcon')
+      centerAlign.classList.remove('activeIcon')
+      rightAlign.classList.remove('activeIcon')
+    } else if (cellProp.alignment === 'center') {
+      leftAlign.classList.remove('activeIcon')
+      centerAlign.classList.add('activeIcon')
+      rightAlign.classList.remove('activeIcon')
+    } else if (cellProp.alignment === 'right') {
+      leftAlign.classList.remove('activeIcon')
+      centerAlign.classList.remove('activeIcon')
+      rightAlign.classList.add('activeIcon')
+    }
+
+    //Apply UI Properties
+    cellProp.bold
+      ? bold.classList.add('activeIcon')
+      : bold.classList.remove('activeIcon') // Bold
+
+    cellProp.italic
+      ? italic.classList.add('activeIcon')
+      : italic.classList.remove('activeIcon') //UI Change
+
+    cellProp.underline
+      ? underline.classList.add('activeIcon')
+      : underline.classList.remove('activeIcon') //UI Change
+
+    fontSize.value = cellProp.fontSize
+    fontFamily.value = cellProp.fontFamily
+    fontColor.value = cellProp.fontColor
+    backgroundColor.value = cellProp.backgroundColor
+
     if (cellProp.alignment === 'left') {
       leftAlign.classList.add('activeIcon')
       centerAlign.classList.remove('activeIcon')
