@@ -27,6 +27,12 @@ for (let i = 0; i < rows; i++) {
   for (let j = 0; j < cols; j++) {
     let cell = document.createElement('div')
     cell.setAttribute('contenteditable', true)
+
+    //Attributes for cell and storage identification
+    cell.setAttribute('rid', i)
+    cell.setAttribute('cid', j)
+    cell.setAttribute('spellcheck', false)
+
     cell.classList.add('cell')
     rowCont.appendChild(cell)
 
@@ -42,6 +48,11 @@ function displayCellAddress(cell, i, j) {
     addressBar.value = `${colID}${rowID}`
   })
 }
+
+//By default click on first cell
+let firstCell = document.querySelector('.cell')
+firstCell.focus()
+firstCell.click()
 
 //Setting Scroll to go 2rem on each particular scroll
 const scrollElement = document.querySelector('.grid-cont')
