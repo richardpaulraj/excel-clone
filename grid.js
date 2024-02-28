@@ -37,6 +37,7 @@ for (let i = 0; i < rows; i++) {
     rowCont.appendChild(cell)
 
     displayCellAddress(cell, i, j)
+    navCellColor(cell, i, j)
   }
   cellsContainer.appendChild(rowCont)
 }
@@ -48,6 +49,32 @@ function displayCellAddress(cell, i, j) {
     addressBar.value = `${colID}${rowID}`
   })
 }
+
+//navCellColor Starts
+let addressRows = document.querySelectorAll('.address-row')
+let addressCols = document.querySelectorAll('.address-col')
+
+let selectedCell = null
+
+function navCellColor(cell, i, j) {
+  cell.addEventListener('click', () => {
+    if (selectedCell !== null) {
+      addressRows[selectedCell.row].style.backgroundColor = ''
+      addressCols[selectedCell.col].style.backgroundColor = ''
+    }
+
+    // Apply background color only to the clicked cell
+    addressRows[j].style.backgroundColor = 'rgb(76 175 80 / 20%)'
+    addressCols[i].style.backgroundColor = 'rgb(76 175 80 / 20%)'
+
+    //Update Selected Cell so that it can clear the background next time
+    selectedCell = {
+      row: j,
+      col: i,
+    }
+  })
+}
+//navCellColor Ends
 
 //By default click on first cell
 let firstCell = document.querySelector('.cell')
