@@ -13,6 +13,9 @@ for (let i = 0; i < rows; i++) {
       fontSize: '16',
       fontColor: '#000000',
       backgroundColor: '#000000', //Just for indication purpose
+      value: '', //To store the value of each cell
+      formula: '',
+      children: [],
     }
     sheetRow.push(cellProp)
   }
@@ -38,7 +41,8 @@ let rightAlign = alignment[2]
 
 //Bold
 bold.addEventListener('click', (e) => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
 
   //Modification
   cellProp.bold = !cellProp.bold //Data Change
@@ -50,7 +54,8 @@ bold.addEventListener('click', (e) => {
 
 //Italic
 italic.addEventListener('click', (e) => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
 
   //Modification
   cellProp.italic = !cellProp.italic //Data Change
@@ -62,7 +67,8 @@ italic.addEventListener('click', (e) => {
 
 //Underline
 underline.addEventListener('click', (e) => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
 
   //Modification
   cellProp.underline = !cellProp.underline //Data Change
@@ -74,7 +80,8 @@ underline.addEventListener('click', (e) => {
 
 //Font Size
 fontSize.addEventListener('change', (e) => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
   //Modification
   cellProp.fontSize = fontSize.value //Data Change
   cell.style.fontSize = cellProp.fontSize + 'px'
@@ -83,7 +90,8 @@ fontSize.addEventListener('change', (e) => {
 
 //Font Family
 fontFamily.addEventListener('change', (e) => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
   //Modification
   cellProp.fontFamily = fontFamily.value //Data Change
   cell.style.fontFamily = cellProp.fontFamily
@@ -92,7 +100,8 @@ fontFamily.addEventListener('change', (e) => {
 
 //Font Color
 fontColor.addEventListener('change', () => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
   cellProp.fontColor = fontColor.value
   cell.style.color = cellProp.fontColor
   fontColor.value = cellProp.fontColor
@@ -100,7 +109,8 @@ fontColor.addEventListener('change', () => {
 
 //Background Color
 backgroundColor.addEventListener('change', () => {
-  let [cell, cellProp] = activeCell()
+  let address = addressBar.value
+  let [cell, cellProp] = getCellAndCellProp(address)
   cellProp.backgroundColor = backgroundColor.value
   cell.style.backgroundColor = cellProp.backgroundColor
   backgroundColor.value = cellProp.backgroundColor
@@ -109,7 +119,8 @@ backgroundColor.addEventListener('change', () => {
 //Alignment
 alignment.forEach((alignElem) => {
   alignElem.addEventListener('click', (e) => {
-    let [cell, cellProp] = activeCell()
+    let address = addressBar.value
+    let [cell, cellProp] = getCellAndCellProp(address)
     let alignValue = e.target.classList[0]
     cellProp.alignment = alignValue // DB Updated
     cell.style.textAlign = cellProp.alignment //UI Change - 1)
@@ -138,7 +149,8 @@ for (let i = 0; i < allCells.length; i++) {
 
 function addListnerToAttachCellProperties(cell) {
   cell.addEventListener('click', (e) => {
-    let [cell, cellProp] = activeCell()
+    let address = addressBar.value
+    let [cell, cellProp] = getCellAndCellProp(address)
     //Apply Cell Properties
     cell.style.fontWeight = cellProp.bold ? 'bold' : 'normal' // Bold
     cell.style.fontStyle = cellProp.italic ? 'italic' : 'normal' // Italic
@@ -197,20 +209,23 @@ function addListnerToAttachCellProperties(cell) {
       centerAlign.classList.remove('activeIcon')
       rightAlign.classList.add('activeIcon')
     }
+
+    //When clicking on the new cell removing the Formula value in the formula bar
+    let formulaBar = document.querySelector('.formula-bar')
+    formulaBar.value = cellProp.formula
+    cell.value = cellProp.value
   })
 }
 
-function activeCell() {
-  let [rid, cid] = decodeRIDCID()
+function getCellAndCellProp(address) {
+  let [rid, cid] = decodeRIDCID(address)
   let cell = document.querySelector(`.cell[rid = "${rid}"][cid = "${cid}"]`) //UI changes is done in the cells
   let cellProp = sheetDB[rid][cid] // DB changes are done in the cellProp
-
   return [cell, cellProp]
 }
 
-function decodeRIDCID() {
-  let value = addressBar.value //addressBar is already defined in the grid.js file
-  let cid = value[0].charCodeAt(0) - 65
-  let rid = value[1] - 1 // -1 because of the 0 indexing values
+function decodeRIDCID(address) {
+  let rid = Number(address.slice(1) - 1) // "1" -> 0
+  let cid = Number(address.charCodeAt(0)) - 65 // "A" -> 65
   return [rid, cid]
 }
