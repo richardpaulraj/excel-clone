@@ -1,39 +1,41 @@
 let rows = 100
 let cols = 26
 
-let addressColContainer = document.querySelector('.address-col-cont')
-let addressRowContainer = document.querySelector('.address-row-cont')
-let cellsContainer = document.querySelector('.cells-cont')
-let addressBar = document.querySelector('.address-bar')
+let addressColContainer = document.querySelector('.address-col-cont') // 1-100 //
+let addressRowContainer = document.querySelector('.address-row-cont') // A-Z //
+let cellsContainer = document.querySelector('.cells-cont') // A-Z Wrapper //
+let addressBar = document.querySelector('.address-bar') // Current Cell Address //
 
+//Creating 1-100
 for (let i = 0; i < rows; i++) {
-  let addressCol = document.createElement('div')
+  let addressCol = document.createElement('div') //Each Number
   addressCol.innerText = i + 1
   addressCol.classList.add('address-col')
   addressColContainer.appendChild(addressCol)
 }
-
+//Creating A-Z
 for (let i = 0; i < cols; i++) {
-  let addressRow = document.createElement('div')
+  let addressRow = document.createElement('div') //Each Alphabet
   addressRow.classList.add('address-row')
   let text = String.fromCharCode(65 + i) // This is used to convert number to character it starts from 65
   addressRow.innerText = text
   addressRowContainer.appendChild(addressRow)
 }
 
+//Crating the Actual cells in the Container apart from 1-100 and A-Z
 for (let i = 0; i < rows; i++) {
   let rowCont = document.createElement('div')
   rowCont.classList.add('row-cont')
   for (let j = 0; j < cols; j++) {
     let cell = document.createElement('div')
+    cell.classList.add('cell')
     cell.setAttribute('contenteditable', true)
+    cell.setAttribute('spellcheck', false)
 
     //Attributes for cell and storage identification
     cell.setAttribute('rid', i)
     cell.setAttribute('cid', j)
-    cell.setAttribute('spellcheck', false)
 
-    cell.classList.add('cell')
     rowCont.appendChild(cell)
 
     displayCellAddress(cell, i, j)
@@ -41,6 +43,8 @@ for (let i = 0; i < rows; i++) {
   }
   cellsContainer.appendChild(rowCont)
 }
+
+//Setting the current address value to the Address Bar when user clicks
 
 function displayCellAddress(cell, i, j) {
   cell.addEventListener('click', () => {
@@ -51,8 +55,8 @@ function displayCellAddress(cell, i, j) {
 }
 
 //navCellColor Starts
-let addressRows = document.querySelectorAll('.address-row')
-let addressCols = document.querySelectorAll('.address-col')
+let addressRows = document.querySelectorAll('.address-row') //Each Alphabet
+let addressCols = document.querySelectorAll('.address-col') //Each Number
 
 let selectedCell = null
 
@@ -63,7 +67,7 @@ function navCellColor(cell, i, j) {
       addressCols[selectedCell.col].style.backgroundColor = ''
     }
 
-    // Apply background color only to the clicked cell
+    // Apply background color only to the corresponding Numbers and Alphabets of the clicked cell
     addressRows[j].style.backgroundColor = 'rgb(76 175 80 / 20%)'
     addressCols[i].style.backgroundColor = 'rgb(76 175 80 / 20%)'
 
@@ -81,7 +85,7 @@ let firstCell = document.querySelector('.cell')
 firstCell.focus()
 firstCell.click()
 
-//Setting Scroll to go 2rem on each particular scroll
+//Setting Scroll to go 2rem on each particular scroll to avoid looking ugly because of the next cell
 const scrollElement = document.querySelector('.grid-cont')
 
 scrollElement.addEventListener('wheel', (event) => {

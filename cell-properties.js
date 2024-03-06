@@ -42,10 +42,10 @@ let rightAlign = alignment[2]
 //Bold
 bold.addEventListener('click', (e) => {
   let address = addressBar.value
-  let [cell, cellProp] = getCellAndCellProp(address)
+  let [cell, cellProp] = getCellAndCellProp(address) //Passing the raw address
 
   //Modification
-  cellProp.bold = !cellProp.bold //Data Change
+  cellProp.bold = !cellProp.bold //Data Change in DB
   cell.style.fontWeight = cellProp.bold ? 'bold' : 'normal' //UI Change
   cellProp.bold
     ? bold.classList.add('activeIcon')
@@ -144,6 +144,7 @@ alignment.forEach((alignElem) => {
 
 let allCells = document.querySelectorAll('.cell')
 for (let i = 0; i < allCells.length; i++) {
+  //Why we are doing this is because the cells are not updating. Everthing works fine in any first cell you edit but when you go the the next cell the value of the previous cell (like bold , size, ...) also shows as active in the second cell so to refresh those data's we are doing this
   addListnerToAttachCellProperties(allCells[i])
 }
 
