@@ -10,6 +10,7 @@ for (let i = 0; i < rows; i++) {
   for (let j = 0; j < cols; j++) {
     let cell = document.querySelector(`.cell[rid = "${i}"][cid = "${j}"]`)
 
+    //This Blur Event  works first compared to Click Event
     cell.addEventListener('blur', (e) => {
       let address = addressBar.value
       let [activeCell, cellProp] = getCellAndCellProp(address)
@@ -30,12 +31,9 @@ for (let i = 0; i < rows; i++) {
 let formulaBar = document.querySelector('.formula-bar')
 
 formulaBar.addEventListener('keydown', (e) => {
-  // && formulaBar.value means it should not be empty value
-
   let inputFormula = formulaBar.value
 
   if (e.key === 'Enter' && inputFormula) {
-    //If Change in Formula, break old Parent-Child relation, evaluate new formula, add new P-C realtion
     let address = addressBar.value
     let [cell, cellProp] = getCellAndCellProp(address)
 
@@ -43,12 +41,12 @@ formulaBar.addEventListener('keydown', (e) => {
       removeChildFromParent(cellProp.formula)
     }
 
-    let evaluatedValue = evaluateFormula(inputFormula) // here the inputed value will be somthing like '2+5+6' and the eval calculates it
+    let evaluatedValue = evaluateFormula(inputFormula) // here the inputed value will be somthing like '2 + 5 + 6' or even A1 + A2 and the eval calculates it
 
     //to update UI and cellProp in DB
     setCellUIAndCellProp(evaluatedValue, inputFormula, address)
+
     addChildToParent(inputFormula)
-    console.log(sheetDB)
 
     updateChildrenCells(address)
   }
@@ -75,8 +73,8 @@ function addChildToParent(formula) {
   for (let i = 0; i < encodedFormula.length; i++) {
     let asciiValue = encodedFormula[i].charCodeAt(0)
     if (asciiValue >= 65 && asciiValue <= 90) {
-      let [parentCell, parentCellProp] = getCellAndCellProp(encodedFormula[i])
-      parentCellProp.children.push(childAddress)
+      let [parentCell, parentCellProp] = getCellAndCellProp(encodedFormula[i]) // eg. C1 + B2 , it will add in C1 and in B1 the children as the current Selected element actually who wants the answer
+      parentCellProp.children.push(childAddress) //Child Address means the current address is child and formula one is the parent address
     }
   }
 }
@@ -94,7 +92,9 @@ function removeChildFromParent(formula) {
 }
 
 function evaluateFormula(formula) {
-  let encodedFormula = formula.split(' ')
+  //here to identify weather the function is an Encoded one or dependency one thats y we are using ASCII to evaluate
+  let encodedFormula = formula.split(' ') //Because user inputs the formula in a space seperated manner. Here we would get 3 values
+  //eg. 'A1' '+' 'A2' we only wanted A1 and A2 so we will filter it out using ASCII value from 65 to 90 below
   for (let i = 0; i < encodedFormula.length; i++) {
     /*
     Here first we have to check weather the each value is an dependency value like 'A2' or normal value like '15'
@@ -103,12 +103,12 @@ function evaluateFormula(formula) {
     let asciiValue = encodedFormula[i].charCodeAt(0) // If there is A1 the we only want the A's value // Here charCodeAt actually converts the the Ascii value.  Eg: let val = 'A' ;  val.charCodeAt(0) ===> 65 ;
 
     if (asciiValue >= 65 && asciiValue <= 90) {
-      let [cell, cellProp] = getCellAndCellProp(encodedFormula[i])
-      encodedFormula[i] = cellProp.value
+      let [cell, cellProp] = getCellAndCellProp(encodedFormula[i]) // Here we will be passing A1 and next time A2 just to extract its inner Value
+      encodedFormula[i] = cellProp.value //Here we would add those value in their respective place eg(A1 = 5 , A2 = 1  so 5 + 1) and below this the eval functions evalutes this equation
     }
   }
 
-  let decodedFormula = encodedFormula.join(' ')
+  let decodedFormula = encodedFormula.join(' ') //Because eval takes in as a string format
   return eval(decodedFormula) //The eval() function evaluates JavaScript code represented as a string and returns its completion value. The source is parsed as a script.
 
   // *** For eval to work the formaula should be seperated by space *** //
