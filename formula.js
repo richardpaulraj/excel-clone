@@ -41,6 +41,16 @@ formulaBar.addEventListener('keydown', (e) => {
       removeChildFromParent(cellProp.formula)
     }
 
+    addChildToGraphComponent(inputFormula, address) //The current adderess from the formula we can find the parent
+    //Check weather the formula ia cyclic or not and then only evaluate
+    let isCyclic = isGraphCyclic(graphComponentMatrix)
+    if (isCyclic === true) {
+      alert('Your formula is Cyclic')
+      //If this is cyclic there is no use of storing the child value in the Graph Component so we will remove it
+      removeChildFromGraphComponent(inputFormula, address)
+      return
+    }
+
     let evaluatedValue = evaluateFormula(inputFormula) // here the inputed value will be somthing like '2 + 5 + 6' or even A1 + A2 and the eval calculates it
 
     //to update UI and cellProp in DB
@@ -51,6 +61,38 @@ formulaBar.addEventListener('keydown', (e) => {
     updateChildrenCells(address)
   }
 })
+
+function addChildToGraphComponent(formula, childAddress) {
+  let [crid, ccid] = decodeRIDCID(childAddress) //Child Column ID -> ccid
+
+  //Now from our formula we are going to decode our parent details
+  let encodedFormula = formula.split(' ')
+  for (let i = 0; i < encodedFormula.length; i++) {
+    let asciiValue = encodedFormula[i].charCodeAt(0)
+
+    if (asciiValue >= 65 && asciiValue <= 90) {
+      let [prid, pcid] = decodeRIDCID(encodedFormula[i]) //Parent Column ID -> pcid
+
+      //in the cycleValidation file if you see graphComponentMatrix[0][0] --> called Parent Cell where we will be pushing are child details
+      graphComponentMatrix[prid][pcid].push([crid, ccid])
+    }
+  }
+}
+function removeChildFromGraphComponent(formula, childAddress) {
+  //This function is similar to the add Functionality only thing is i am removing using pop() here
+
+  //Now from our formula we are going to decode our parent details
+  let encodedFormula = formula.split(' ')
+
+  for (let i = 0; i < encodedFormula.length; i++) {
+    let asciiValue = encodedFormula[i].charCodeAt(0)
+
+    if (asciiValue >= 65 && asciiValue <= 90) {
+      let [prid, pcid] = decodeRIDCID(encodedFormula[i]) //Parent Column ID -> pcid
+      graphComponentMatrix[prid][pcid].pop()
+    }
+  }
+}
 
 function updateChildrenCells(parentAddress) {
   let [parentCell, parentCellProp] = getCellAndCellProp(parentAddress)
