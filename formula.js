@@ -25,6 +25,22 @@ for (let i = 0; i < rows; i++) {
       cellProp.formula = ''
       updateChildrenCells(address)
     })
+
+    //I have added this input because the data gets erased when user click on that cell again whithout moving to other cell
+    cell.addEventListener('input', (e) => {
+      let address = addressBar.value
+      let [activeCell, cellProp] = getCellAndCellProp(address)
+      let enteredData = activeCell.innerText
+
+      if (enteredData === cellProp.value) return
+
+      cellProp.value = enteredData
+
+      //If modifies remove P-C relationship, formula empty, update childrens with new hardcoded (modified) value
+      removeChildFromParent(cellProp.formula)
+      cellProp.formula = ''
+      updateChildrenCells(address)
+    })
   }
 }
 

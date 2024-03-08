@@ -12,8 +12,14 @@
   padding-left: 1rem;
 }
 .page-action {
-  margin: 0.5rem;
+  margin: 0.5rem 1rem;
   color: white;
+}
+.selected-page-action{
+  background-color: #ecf0f1;
+  color: #27ae60;
+  margin: 0;
+  padding: 0.5rem 1rem;
 }
 .cellprop-actions-cont {
   height: 3rem;
@@ -90,6 +96,7 @@
 }
 .sheet-add-icon {
   width: 2rem;
+  cursor: pointer;
 }
 
 .sheets-folder-cont {
@@ -98,12 +105,23 @@
   width: calc(100vw - 2rem);
   display: flex;
   align-items: center;
+  overflow: auto;
 }
 .sheet-folder {
   text-decoration: underline;
+  height: 80%;
   font-weight: bold;
   text-decoration-thickness: 1.5px;
   font-size: 0.9rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sheet-content{
+  width: 5rem;
+  cursor: pointer;
+  text-align: center;
 }
 
 /* For the Grid */

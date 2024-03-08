@@ -1,26 +1,35 @@
 //Storage
+let collectedSheetDB = [] //Contains all Sheet DB
 let sheetDB = []
 
-for (let i = 0; i < rows; i++) {
-  let sheetRow = []
-  for (let j = 0; j < cols; j++) {
-    let cellProp = {
-      bold: false,
-      italic: false,
-      underline: false,
-      alignment: 'left',
-      fontFamily: 'monospace',
-      fontSize: '16',
-      fontColor: '#000000',
-      backgroundColor: '#000000', //Just for indication purpose
-      value: '', //To store the value of each cell
-      formula: '',
-      children: [],
-    }
-    sheetRow.push(cellProp)
-  }
-  sheetDB.push(sheetRow)
+{
+  let addSheetBtn = document.querySelector('.sheet-add-icon')
+  addSheetBtn.click()
+  // handleSheetProperties()
 }
+
+// for (let i = 0; i < rows; i++) {
+//   let sheetRow = []
+//   for (let j = 0; j < cols; j++) {
+//     let cellProp = {
+//       bold: false,
+//       italic: false,
+//       underline: false,
+//       alignment: 'left',
+//       fontFamily: 'monospace',
+//       fontSize: '16',
+//       fontColor: '#000000',
+//       backgroundColor: '#000000', //Just for indication purpose
+//       value: '', //To store the value of each cell
+//       formula: '',
+//       children: [],
+//     }
+//     sheetRow.push(cellProp)
+//   }
+//   sheetDB.push(sheetRow)
+// }
+
+//Commented and moved to sheetsHandling.js
 
 //Selector for cell properties
 let bold = document.querySelector('.bold')
@@ -214,7 +223,7 @@ function addListnerToAttachCellProperties(cell) {
     //When clicking on the new cell removing the Formula value in the formula bar
     let formulaBar = document.querySelector('.formula-bar')
     formulaBar.value = cellProp.formula
-    cell.value = cellProp.value
+    cell.innerText = cellProp.value
   })
 }
 

@@ -80,10 +80,6 @@ function navCellColor(cell, i, j) {
 }
 //navCellColor Ends
 
-//By default click on first cell
-let firstCell = document.querySelector('.cell')
-firstCell.focus()
-firstCell.click()
 
 //Setting Scroll to go 2rem on each particular scroll to avoid looking ugly because of the next cell
 const scrollElement = document.querySelector('.grid-cont')

@@ -13,16 +13,16 @@
   <body>
     <div class="page-actions-cont">
       <div class="page-action">Home</div>
-      <div class="page-action">File</div>
+      <div class="page-action selected-page-action">File</div>
       <div class="page-action">Insert</div>
       <div class="page-action">Layout</div>
       <div class="page-action">Help</div>
     </div>
     <div class="cellprop-actions-cont">
-      <span class="material-icons"> content_copy </span>
+      <!-- <span class="material-icons"> content_copy </span> -->
       <!--In the className there was 'material-icons-outlined' removed outline to make it work-->
-      <span class="material-icons"> content_cut </span>
-      <span class="material-icons"> content_paste </span>
+      <!-- <span class="material-icons"> content_cut </span> -->
+      <!-- <span class="material-icons"> content_paste </span> -->
       <select class="font-family-prop">
         <option value="monospace">Monospace</option>
         <option value="sans-serif">Sans-Serif</option>
@@ -49,8 +49,8 @@
         <span class="material-icons"> format_color_fill </span>
         <input type="color" class="background-color-prop" />
       </div>
-      <span class="material-icons"> cloud_download </span>
-      <span class="material-icons"> cloud_upload </span>
+      <!-- <span class="material-icons"> cloud_download </span>
+      <span class="material-icons"> cloud_upload </span> -->
     </div>
     <div class="formula-actions-cont">
       <input type="text" readonly class="address-bar" />
@@ -78,14 +78,18 @@
         <span class="material-icons"> post_add </span>
       </div>
       <div class="sheets-folder-cont">
-        <div class="sheet-folder">Sheet 1</div>
+        <!-- <div id="0" class="sheet-folder">
+          <div class="sheet-content">Sheet 1</div>
+        </div> -->
+        <!-- Doing it dynamically in the cell-properties.js (  addSheetBtn.click() ) this will create  -->
       </div>
     </div>
 
     <script src="grid.js"></script>
-    <script src="cell-properties.js"></script>
     <script src="cycleValidation.js"></script>
+    <script src="sheetsHandling.js"></script>
     <!--Moving cycleValidation above the formula becuase there are some functions in formula which is dependent on this-->
     <script src="formula.js"></script>
+    <script src="cell-properties.js"></script>
   </body>
 </html>
