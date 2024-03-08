@@ -37,7 +37,9 @@ let italic = document.querySelector('.italic')
 let underline = document.querySelector('.underline')
 let fontSize = document.querySelector('.font-size-prop')
 let fontFamily = document.querySelector('.font-family-prop')
+let fontColorIcon = document.querySelector('.font-color-icon')
 let fontColor = document.querySelector('.font-color-prop')
+let backgroundColorIcon = document.querySelector('.background-color-icon')
 let backgroundColor = document.querySelector('.background-color-prop')
 let alignment = document.querySelectorAll('.alignment')
 let leftAlign = alignment[0]
@@ -108,19 +110,25 @@ fontFamily.addEventListener('change', (e) => {
 })
 
 //Font Color
-fontColor.addEventListener('change', () => {
+fontColorIcon.addEventListener('click', () => {
+  fontColor.click()
+})
+
+fontColor.addEventListener('input', (e) => {
   let address = addressBar.value
   let [cell, cellProp] = getCellAndCellProp(address)
-  cellProp.fontColor = fontColor.value
+  cellProp.fontColor = e.target.value
   cell.style.color = cellProp.fontColor
   fontColor.value = cellProp.fontColor
 })
 
 //Background Color
-backgroundColor.addEventListener('change', () => {
+backgroundColorIcon.addEventListener('click', () => backgroundColor.click())
+
+backgroundColor.addEventListener('input', (e) => {
   let address = addressBar.value
   let [cell, cellProp] = getCellAndCellProp(address)
-  cellProp.backgroundColor = backgroundColor.value
+  cellProp.backgroundColor = e.target.value
   cell.style.backgroundColor = cellProp.backgroundColor
   backgroundColor.value = cellProp.backgroundColor
 })

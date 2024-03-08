@@ -15,7 +15,7 @@
   margin: 0.5rem 1rem;
   color: white;
 }
-.selected-page-action{
+.selected-page-action {
   background-color: #ecf0f1;
   color: #27ae60;
   margin: 0;
@@ -118,7 +118,7 @@
   align-items: center;
   justify-content: center;
 }
-.sheet-content{
+.sheet-content {
   width: 5rem;
   cursor: pointer;
   text-align: center;
@@ -181,18 +181,23 @@
   padding: 2px;
   border: 1px solid #ecf0f1;
   overflow: auto;
-  outline-color: rgb(76 175 80 / 60%);
+  outline: none;
+}
+.cell:focus {
+  border: 2px solid rgb(76 175 80 / 60%);
 }
 .color-prop {
   position: relative;
 }
 .color-prop > input {
-  position: absolute;
+  /* position: absolute;
   opacity: 0;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; */
+  /* position: absolute; */
+  display: none;
 }
 .material-icons {
   cursor: pointer;
